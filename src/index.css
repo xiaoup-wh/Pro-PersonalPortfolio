@@ -1,0 +1,154 @@
+/**
+ * index.css - 全局样式文件
+ * 
+ * 这个文件定义了整个网站的基础样式。
+ * 包括：
+ * - Tailwind CSS 的引入
+ * - 全局基础样式（字体、背景色等）
+ * - 自定义滚动条样式
+ * 
+ * CSS = Cascading Style Sheets（层叠样式表）
+ * 用于控制网页的外观和布局
+ */
+
+/* 
+  ========== Tailwind CSS 指令 ==========
+  
+  @tailwind: Tailwind CSS 的特殊指令
+  
+  base: 引入 Tailwind 的基础样式
+  - 重置浏览器默认样式
+  - 统一各浏览器的显示效果
+  
+  components: 引入 Tailwind 的组件类
+  - 可复用的组件样式
+  
+  utilities: 引入 Tailwind 的工具类
+  - 各种实用类（如 flex、text-center、bg-blue-500 等）
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 
+  ========== 全局基础样式 ==========
+  
+  *: 通配符选择器
+  选择所有 HTML 元素
+  
+  这段代码重置所有元素的默认样式
+  确保网站在所有浏览器上显示一致
+*/
+* {
+  margin: 0;      /* 外边距：0（去掉默认间距） */
+  padding: 0;     /* 内边距：0（去掉默认填充） */
+  box-sizing: border-box;  /* 盒模型：边框盒（让宽高计算更简单） */
+}
+
+/* 
+  ========== body 样式 ==========
+  
+  body: 网页主体标签
+  所有可见内容都在 body 里面
+  
+  这里定义了：
+  - 字体：Inter 字体优先，其次是系统字体
+  - 背景色：深蓝色（#0f172a）
+  - 文字颜色：浅灰色（#e2e8f0）
+  - 最小高度：100vh（至少占满整个屏幕）
+*/
+body {
+  font-family: 'Inter', system-ui, sans-serif;  /* 字体列表 */
+  background: #0f172a;   /* 背景色：深蓝色 */
+  color: #e2e8f0;        /* 文字颜色：浅灰色 */
+  min-height: 100vh;     /* 最小高度：100vh = 100% 视口高度 */
+}
+
+/* 
+  ========== 自定义滚动条样式 ==========
+  
+  滚动条是网页右侧可以拖动的小条
+  默认样式比较丑，这里自定义让它更美观
+  
+  ::-webkit-scrollbar: 整个滚动条
+  只在 Chrome、Safari 等浏览器有效
+*/
+::-webkit-scrollbar {
+  width: 8px;   /* 滚动条宽度：8px */
+}
+
+/* 
+  ::-webkit-scrollbar-track: 滚动条轨道
+  滚动条滑动的背景区域
+*/
+::-webkit-scrollbar-track {
+  background: #1e293b;  /* 轨道背景：深灰色 */
+}
+
+/* 
+  ::-webkit-scrollbar-thumb: 滚动条滑块
+  可以拖动的那部分
+*/
+::-webkit-scrollbar-thumb {
+  background: #334155;   /* 滑块背景：灰色 */
+  border-radius: 4px;    /* 圆角：4px */
+}
+
+/* 
+  ::-webkit-scrollbar-thumb:hover: 滑块悬停状态
+  鼠标悬停在滑块上时的样式
+*/
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;   /* 悬停时背景变深 */
+}
+
+/* 
+  ========== Tailwind CSS 类名说明 ==========
+  
+  Tailwind 使用"实用类"的方式写样式
+  每个类名对应一个 CSS 属性
+  
+  常用类名：
+  
+  间距：
+  - p-{n}: padding（内边距）
+  - m-{n}: margin（外边距）
+  - px-{n}: padding-left + padding-right
+  - py-{n}: padding-top + padding-bottom
+  
+  尺寸：
+  - w-{n}: width（宽度）
+  - h-{n}: height（高度）
+  - min-h-screen: 最小高度 = 屏幕高度
+  
+  字体：
+  - text-{size}: 字体大小（xs, sm, base, lg, xl, 2xl...）
+  - font-{weight}: 字体粗细（thin, light, normal, medium, bold...）
+  - text-{color}: 文字颜色
+  
+  背景：
+  - bg-{color}: 背景颜色
+  - bg-gradient-to-{direction}: 渐变背景
+  
+  边框：
+  - border: 边框
+  - rounded-{size}: 圆角（none, sm, md, lg, xl, 2xl, full）
+  
+  布局：
+  - flex: 弹性布局
+  - grid: 网格布局
+  - items-center: 子元素居中
+  - justify-center: 内容居中
+  
+  响应式：
+  - sm: 小屏幕（640px+）
+  - md: 中屏幕（768px+）
+  - lg: 大屏幕（1024px+）
+  - xl: 超大屏幕（1280px+）
+  
+  例如：
+  - text-center = text-align: center
+  - bg-blue-500 = background-color: #3b82f6
+  - p-4 = padding: 1rem (16px)
+  - rounded-full = border-radius: 9999px
+*/
