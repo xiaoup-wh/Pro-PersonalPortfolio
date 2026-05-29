@@ -1,25 +1,76 @@
 {
+  // ========== TypeScript 编译器配置 ==========
   "compilerOptions": {
+    // target: 指定编译后 JavaScript 代码的目标版本
+    // ES2020 是一个较新的版本，支持很多现代 JavaScript 特性
     "target": "ES2020",
+
+    // useDefineForClassFields: 启用类字段的标准行为
+    // 让 TypeScript 符合最新的 ECMAScript 类字段规范
     "useDefineForClassFields": true,
+
+    // lib: 指定 TypeScript 编译时可用的库文件
+    // ES2020: 提供 ES2020 标准的 API
+    // DOM: 提供浏览器 DOM 的类型定义（如 document, window）
+    // DOM.Iterable: 提供 DOM 可迭代对象的类型定义
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+    // module: 指定生成的模块系统
+    // ESNext: 使用最新的 ES 模块语法（import/export）
     "module": "ESNext",
+
+    // skipLibCheck: 是否跳过对库文件的类型检查
+    // 设置为 true 可以加快编译速度，避免第三方库的类型错误
     "skipLibCheck": true,
 
-    /* Bundler mode */
+    // ========== 打包器模式配置 ==========
+    // 这些配置是为了配合 Vite 等现代打包工具使用
+
+    // moduleResolution: 指定模块解析策略
+    // bundler: 让 TypeScript 使用与打包器（如 Vite）一致的解析方式
     "moduleResolution": "bundler",
+
+    // allowImportingTsExtensions: 是否允许导入 .ts/.tsx 文件时带扩展名
+    // 设置为 true 可以保持导入路径的清晰
     "allowImportingTsExtensions": true,
+
+    // resolveJsonModule: 是否允许导入 JSON 文件
+    // 设置为 true 可以直接 import .json 文件
     "resolveJsonModule": true,
+
+    // isolatedModules: 是否将每个文件当作单独的模块处理
+    // Vite 等打包器要求每个文件都是独立模块
     "isolatedModules": true,
+
+    // noEmit: 是否生成 JavaScript 输出文件
+    // 设置为 true，因为我们使用 Vite 来处理编译和打包
     "noEmit": true,
+
+    // jsx: 指定 JSX 的处理方式
+    // react-jsx: 使用 React 17+ 的新 JSX 转换（不需要引入 React）
     "jsx": "react-jsx",
 
-    /* Linting */
+    // ========== 代码检查配置（Linting） ==========
+    // 这些配置帮助我们写出更规范、更安全的代码
+
+    // strict: 启用所有严格类型检查选项
+    // 相当于同时开启：noImplicitAny, noImplicitThis, alwaysStrict 等
     "strict": true,
+
+    // noUnusedLocals: 是否报告未使用的局部变量
+    // 避免代码中存在无用的变量
     "noUnusedLocals": true,
+
+    // noUnusedParameters: 是否报告未使用的函数参数
+    // 避免函数中有未使用的参数
     "noUnusedParameters": true,
+
+    // noFallthroughCasesInSwitch: 是否报告 switch 语句中的 fallthrough
+    // 确保 switch 的每个 case 都有 break 或 return
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+
+  // include: 指定 TypeScript 需要编译的文件范围
+  // "src": 编译 src 目录下的所有文件
+  "include": ["src"]
 }
