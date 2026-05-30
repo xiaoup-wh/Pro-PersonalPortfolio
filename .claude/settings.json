@@ -1,0 +1,6 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "node -e \"const d=JSON.parse(require('fs').readFileSync(0,'utf8'));const ctx=d.context_window?.remaining_percentage!=null?' | Ctx: '+d.context_window.remaining_percentage+'% remaining':'';console.log(d.cwd+' | '+d.model.display_name+ctx)\""
+  }
+}
