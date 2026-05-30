@@ -57,11 +57,42 @@
   - 文字颜色：浅灰色（#e2e8f0）
   - 最小高度：100vh（至少占满整个屏幕）
 */
+/**
+ * 全局基础样式
+ * ============
+ *
+ * 设计理念：
+ * - 使用 DM Sans 作为默认字体，优雅清晰
+ * - 深色背景 (#0a0a0a) 营造沉浸式体验
+ * - 温暖的浅色文字 (#f5f0eb) 提供舒适的阅读感
+ * - 字体抗锯齿确保在各平台显示平滑
+ */
 body {
-  font-family: 'Inter', system-ui, sans-serif;  /* 字体列表 */
-  background: #0f172a;   /* 背景色：深蓝色 */
-  color: #e2e8f0;        /* 文字颜色：浅灰色 */
-  min-height: 100vh;     /* 最小高度：100vh = 100% 视口高度 */
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #0a0a0a;
+  color: #f5f0eb;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;  /* macOS 字体平滑 */
+  -moz-osx-font-smoothing: grayscale;   /* Firefox 字体平滑 */
+}
+
+/**
+ * 文本选择样式
+ * -------------
+ * 使用琥珀色作为选择高亮色，与主题一致
+ */
+::selection {
+  background: rgba(237, 122, 31, 0.3);
+  color: #f5f0eb;
+}
+
+/**
+ * 平滑滚动
+ * ---------
+ * 启用全局平滑滚动，提升导航体验
+ */
+html {
+  scroll-behavior: smooth;
 }
 
 /* 
@@ -73,33 +104,33 @@ body {
   ::-webkit-scrollbar: 整个滚动条
   只在 Chrome、Safari 等浏览器有效
 */
+/**
+ * 自定义滚动条
+ * ============
+ *
+ * 设计原则：
+ * - 细滚动条 (6px) 不干扰内容阅读
+ * - 轨道与背景融合，滑块微微可见
+ * - 悬停时显示主题色，提供交互反馈
+ *
+ * 注意：仅在 Webkit 浏览器（Chrome、Safari）生效
+ * Firefox 使用 scrollbar-width 和 scrollbar-color 属性
+ */
 ::-webkit-scrollbar {
-  width: 8px;   /* 滚动条宽度：8px */
+  width: 6px;
 }
 
-/* 
-  ::-webkit-scrollbar-track: 滚动条轨道
-  滚动条滑动的背景区域
-*/
 ::-webkit-scrollbar-track {
-  background: #1e293b;  /* 轨道背景：深灰色 */
+  background: #0a0a0a;  /* 轨道与背景同色，融为一体 */
 }
 
-/* 
-  ::-webkit-scrollbar-thumb: 滚动条滑块
-  可以拖动的那部分
-*/
 ::-webkit-scrollbar-thumb {
-  background: #334155;   /* 滑块背景：灰色 */
-  border-radius: 4px;    /* 圆角：4px */
+  background: rgba(255, 255, 255, 0.1);  /* 微妙的白色滑块 */
+  border-radius: 3px;
 }
 
-/* 
-  ::-webkit-scrollbar-thumb:hover: 滑块悬停状态
-  鼠标悬停在滑块上时的样式
-*/
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;   /* 悬停时背景变深 */
+  background: rgba(237, 122, 31, 0.3);  /* 悬停时显示琥珀色 */
 }
 
 /* 

@@ -50,13 +50,26 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
   
   return (
     /**
-     * section: 区域容器
-     * 
-     * py-20: 上下内边距 20 单位
+     * 项目展示区域
+     * ============
+     *
+     * 与技能区域形成视觉对比：
+     * - 装饰圆形位置相反（左上 vs 右下）
+     * - 渐变方向相反（from-primary vs from-accent）
+     * - 营造视觉节奏感
      */
-    <section className="py-24 relative">
-      {/* 背景装饰 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-900/5 to-transparent" />
+    <section className="py-32 relative overflow-hidden">
+      {/* 纹理背景 */}
+      <div className="absolute inset-0 bg-dark-950" />
+      <div className="absolute inset-0 bg-grain opacity-20 mix-blend-soft-light" />
+
+      {/* 装饰性渐变圆形 */}
+      <div className="absolute top-0 left-0 w-full h-full">
+        {/* 左上角：琥珀色渐变 */}
+        <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-gradient-to-br from-primary-500/6 to-transparent rounded-full blur-3xl" />
+        {/* 右下角：薄荷绿渐变 */}
+        <div className="absolute bottom-[15%] right-[10%] w-[400px] h-[400px] bg-gradient-to-tr from-accent-500/6 to-transparent rounded-full blur-3xl" />
+      </div>
       
       {/* 
         ====== 内容容器 ======
@@ -75,21 +88,44 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           whileInView: 进入视口时触发动画
           viewport={{ once: true }}: 只触发一次
         */}
+        {/**
+         * 标题区域设计
+         * ------------
+         *
+         * 与技能区域形成呼应：
+         * - 装饰数字 "02"（技能区域是 "01"）
+         * - 英文标签 "Portfolio"（技能区域是 "Expertise"）
+         * - 标题渐变方向相反（accent -> primary）
+         *
+         * 视觉节奏：
+         * 01 (技能) -> 02 (项目)
+         * Expertise -> Portfolio
+         */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-24 relative"
         >
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-accent-400 via-primary-400 to-accent-400 bg-clip-text text-transparent">
-              项目作品
-            </span>
-          </h2>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            精选项目展示，每个项目都体现了对技术与设计的追求
-          </p>
+          {/* 装饰数字：背景锚点 */}
+          <span className="font-display text-[120px] lg:text-[180px] font-extrabold text-white/[0.02] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none pointer-events-none">
+            02
+          </span>
+
+          <div className="relative">
+            {/* 英文标签 */}
+            <span className="font-mono text-sm text-primary-400 tracking-[0.3em] uppercase mb-4 block">Portfolio</span>
+            {/* 中文标题 */}
+            <h2 className="font-display text-5xl lg:text-7xl font-bold mb-6">
+              <span className="text-dark-50">项目</span>
+              <span className="bg-gradient-to-r from-accent-400 to-primary-400 bg-clip-text text-transparent">作品</span>
+            </h2>
+            {/* 描述文字 */}
+            <p className="font-body text-dark-400 text-lg max-w-xl mx-auto">
+              精选项目展示，每个项目都体现了对技术与设计的追求
+            </p>
+          </div>
         </motion.div>
 
         {/* 
@@ -110,28 +146,42 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
             为每个项目创建一个卡片
           */}
           {projects.map((project, index) => (
-            
             /**
-             * motion.div: 带动画的卡片容器
-             * 
-             * whileHover: 悬停时向上移动 8px
-             * 
-             * 效果：鼠标悬停时卡片上浮
+             * 项目卡片
+             * --------
+             *
+             * 设计特点：
+             * 1. 更大的圆角 (rounded-[1.5rem])
+             *    - 比技能卡片更圆润
+             *    - 营造友好、现代的感觉
+             *
+             * 2. 更强的悬停效果
+             *    - y: -15: 上浮 15px（技能卡片是 12px）
+             *    - 更明显的光晕效果
+             *    - scale-95: 光晕比卡片稍小
+             *
+             * 3. flex flex-col h-full
+             *    - 确保所有卡片等高
+             *    - 标签自动推到底部
+             *
+             * 4. 交错动画
+             *    - delay: index * 0.15: 每个卡片延迟 150ms
+             *    - 比技能卡片稍慢，更优雅
              */
             <motion.div
-              key={project.id}              // React key（项目唯一 ID）
-              initial={{ opacity: 0, y: 40 }}
+              key={project.id}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
-              whileHover={{ y: -12, scale: 1.02 }}
-              className="group relative h-full"    // group: 用于组合悬停效果，h-full 确保高度一致
+              transition={{ duration: 0.8, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ y: -15, transition: { duration: 0.4 } }}
+              className="group relative h-full"
             >
-              {/* 卡片光晕效果 */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-600/25 to-accent-500/25 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {/* 悬停光晕：在卡片下方，稍小 */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-accent-500/10 rounded-[2rem] blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 scale-95" />
 
               {/* 卡片主体 */}
-              <div className="relative bg-slate-800/60 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:border-primary-400/50 transition-all duration-300 shadow-xl shadow-black/20 group-hover:shadow-2xl group-hover:shadow-primary-500/15 flex flex-col h-full">
+              <div className="relative bg-white/[0.03] backdrop-blur-xl border border-white/[0.06] rounded-[1.5rem] overflow-hidden hover:border-primary-400/20 transition-all duration-500 group-hover:bg-white/[0.05] flex flex-col h-full">
                 
                 {/* 
                   ====== 项目图片区域 ======
@@ -139,25 +189,56 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   h-48: 固定高度 48 单位
                   overflow-hidden: 隐藏超出部分
                 */}
-                <div className="relative h-52 overflow-hidden">
-                  {/* 项目截图 */}
+                {/**
+                 * 图片区域
+                 * --------
+                 *
+                 * 设计细节：
+                 * 1. 固定高度 (h-56)
+                 *    - 确保所有卡片图片区域等高
+                 *    - overflow-hidden 裁剪超出部分
+                 *
+                 * 2. 图片缩放
+                 *    - duration-1000: 1 秒慢速缩放
+                 *    - scale-110: 放大 10%
+                 *    - 营造"拉近看"的效果
+                 *
+                 * 3. 渐变遮罩
+                 *    - 从底部深色到顶部透明
+                 *    - 让图片底部融入卡片内容区
+                 *
+                 * 4. 链接按钮
+                 *    - 右上角，悬停时渐现
+                 *    - 圆角方形容器，与整体风格统一
+                 *    - 悬停时变色 + 上浮 + 阴影
+                 *
+                 * 5. 装饰序号
+                 *    - 左下角超大数字
+                 *    - 极低透明度 (5%)，增加层次
+                 */}
+                <div className="relative h-56 overflow-hidden">
+                  {/* 项目图片 */}
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
 
-                  {/* 图片渐变遮罩 */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-90" />
+                  {/* 渐变遮罩：底部融入 */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/50 to-transparent" />
 
-                  {/* 项目链接按钮 */}
+                  {/* 链接按钮：悬停时显示 */}
                   <a
                     href={project.link}
-                    className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gradient-to-br hover:from-primary-500 hover:to-accent-500 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/30 active:scale-95 active:translate-y-0"
+                    className="absolute top-4 right-4 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-primary-500 hover:scale-110 hover:-translate-y-1 hover:shadow-warm active:scale-95 active:translate-y-0 border border-white/10"
                   >
-                    {/* ExternalLink 图标 */}
-                    <ExternalLink className="w-6 h-6" />
+                    <ExternalLink className="w-5 h-5" />
                   </a>
+
+                  {/* 装饰序号 */}
+                  <span className="absolute bottom-4 left-5 font-display text-[80px] font-extrabold text-white/[0.05] leading-none select-none">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                 </div>
                 
                 {/* 
@@ -165,23 +246,46 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   
                   p-6: 内边距 6 单位
                 */}
+                {/**
+                 * 内容区域
+                 * --------
+                 *
+                 * 布局：
+                 * - flex flex-col flex-1: 垂直布局，自动填充剩余空间
+                 * - mt-auto: 标签自动推到底部
+                 *
+                 * 标题：
+                 * - font-display: Syne 显示字体
+                 * - 悬停时变色 (primary-300)
+                 *
+                 * 描述：
+                 * - line-clamp-2: 限制 2 行，超出省略
+                 * - flex-1: 占据剩余空间
+                 *
+                 * 标签：
+                 * - font-mono: 等宽字体，技术感
+                 * - rounded-xl: 比圆形更现代
+                 * - hover:border-accent-400/30: 悬停时薄荷绿边框
+                 * - transitionDelay: 标签交错动画
+                 */}
                 <div className="p-7 flex flex-col flex-1">
                   {/* 项目标题 */}
-                  <h3 className="text-2xl font-bold mb-3 group-hover:text-primary-400 transition-colors duration-300">
+                  <h3 className="font-display text-2xl font-bold text-dark-50 mb-3 group-hover:text-primary-300 transition-colors duration-500">
                     {project.title}
                   </h3>
 
                   {/* 项目描述 */}
-                  <p className="text-slate-400 text-base mb-5 line-clamp-2 leading-relaxed flex-1">
+                  <p className="font-body text-dark-400 text-base mb-6 line-clamp-2 leading-relaxed flex-1">
                     {project.description}
                   </p>
 
-                  {/* 技术标签 - 固定在底部 */}
+                  {/* 技术标签 */}
                   <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.tags.map((tag) => (
+                    {project.tags.map((tag, tagIndex) => (
                       <span
                         key={tag}
-                        className="px-4 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-white/5 to-white/10 text-slate-300 border border-white/10 hover:border-primary-400/50 hover:bg-primary-500/10 transition-all duration-200"
+                        className="px-4 py-1.5 text-xs font-mono font-medium rounded-xl bg-white/[0.04] text-dark-300 border border-white/[0.06] hover:border-accent-400/30 hover:text-accent-400 hover:bg-accent-500/10 transition-all duration-300"
+                        style={{ transitionDelay: `${tagIndex * 50}ms` }}
                       >
                         {tag}
                       </span>

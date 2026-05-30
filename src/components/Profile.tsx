@@ -83,14 +83,26 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
      * - initial: 初始状态（透明度 0，向下偏移 20px）
      * - animate: 动画目标（透明度 1，回到原位）
      * - transition: 动画时长 0.6 秒
-     * 
+     *
      * 效果：组件从下方渐入，像"飘上来"一样
      */
+
+    /**
+     * 主容器
+     * ------
+     * - min-h-screen: 占满整个视口高度
+     * - flex items-center: 垂直居中内容
+     * - overflow-hidden: 隐藏溢出的装饰元素
+     *
+     * 入场动画：
+     * - 从下方 30px 渐入
+     * - 使用自定义贝塞尔曲线 [0.22, 1, 0.36, 1]，比默认 ease-out 更有弹性
+     */
     <motion.section
-      initial={{ opacity: 0, y: 20 }}      // 初始：透明 + 下移 20px
-      animate={{ opacity: 1, y: 0 }}       // 目标：不透明 + 原位
-      transition={{ duration: 0.8, ease: "easeOut" }} // 动画时长，使用更平滑的缓动函数
-      className="relative overflow-hidden" // 相对定位 + 隐藏溢出
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      className="relative overflow-hidden min-h-screen flex items-center"
     >
       
       {/* 
@@ -100,36 +112,47 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
         它们创建漂亮的渐变和模糊效果
       */}
       
-      {/* 渐变背景：从蓝色到青色的渐变 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-slate-900/80 to-accent-900/30" />
+      {/**
+       * 背景层设计
+       * ----------
+       * 采用三层结构营造深度感：
+       *
+       * 1. 纯色底层 (bg-dark-950)
+       *    - 最深的背景色 #0a0a0a
+       *
+       * 2. 纹理层 (bg-grain)
+       *    - SVG 噪点纹理，增加纸质/手工质感
+       *    - mix-blend-soft-light: 柔光混合模式，自然融合
+       *    - opacity-30: 微妙的透明度，不喧宾夺主
+       *
+       * 3. 有机形状装饰
+       *    - 使用 animate-morph 动画，形状像细胞一样呼吸
+       *    - 两个形状错开 6 秒，形成节奏感
+       *    - blur-3xl: 大量模糊，营造光晕效果
+       *
+       * 4. 对角线装饰
+       *    - 细线条增加几何感和方向性
+       *    - 25度倾斜，打破水平/垂直的单调
+       */}
+      <div className="absolute inset-0 bg-dark-950" />
+      <div className="absolute inset-0 bg-grain opacity-30 mix-blend-soft-light" />
 
-      {/* 右上角光晕：大圆形模糊效果 */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/25 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-pulse" />
+      {/* 有机形状：右上角 */}
+      <div className="absolute top-20 right-[15%] w-[500px] h-[500px] bg-gradient-to-br from-primary-500/15 to-transparent rounded-full blur-3xl animate-morph" />
+      {/* 有机形状：左下角，延迟 6 秒形成错位 */}
+      <div className="absolute bottom-20 left-[10%] w-[400px] h-[400px] bg-gradient-to-tr from-accent-500/10 to-transparent rounded-full blur-3xl animate-morph" style={{ animationDelay: '-6s' }} />
 
-      {/* 左下角光晕：另一个大圆形模糊效果 */}
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-500/25 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 animate-pulse" />
-
-      {/* 中心装饰光晕 */}
-      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary-500/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
+      {/* 对角线装饰元素：增加几何感 */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[20%] left-[60%] w-[1px] h-[300px] bg-gradient-to-b from-transparent via-primary-500/20 to-transparent rotate-[25deg]" />
+        <div className="absolute top-[40%] left-[70%] w-[1px] h-[200px] bg-gradient-to-b from-transparent via-accent-500/15 to-transparent rotate-[25deg]" />
+      </div>
       
-      {/* 
-        ====== 主要内容区域 ======
+      {/* 主要内容区域 - 非对称布局 */}
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-12 py-20 w-full">
         
-        max-w-6xl: 最大宽度 6xl（约 1152px）
-        mx-auto: 水平居中（margin-x auto）
-        px-6: 左右内边距 6 单位
-        py-20: 上下内边距 20 单位
-      */}
-      <div className="relative max-w-6xl mx-auto px-6 py-20">
-        
-        {/* 
-          flex: 弹性布局（让子元素灵活排列）
-          flex-col: 垂直排列（手机上）
-          lg:flex-row: 大屏幕上水平排列
-          items-center: 子元素垂直居中
-          gap-12: 子元素间距 12 单位
-        */}
-        <div className="flex flex-col lg:flex-row items-center gap-12">
+        {/* 非对称布局：左侧内容，右侧装饰 */}
+        <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-16 lg:gap-24 items-center">
           
           {/* 
             ====== 头像部分 ======
@@ -137,34 +160,72 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
             motion.div: 带动画的容器
             动画效果：从缩小状态放大到正常大小
           */}
+          {/**
+           * 头像区域 - 有机形状设计
+           * -----------------------
+           *
+           * 设计亮点：
+           * 1. 有机形状 (blob shape)
+           *    - 使用 border-radius 的 8 值语法创建不规则形状
+           *    - 格式: 水平半径 / 垂直半径
+           *    - 示例: 60% 40% 30% 70% / 60% 30% 70% 40%
+           *    - 悬停时变形，像细胞呼吸一样
+           *
+           * 2. 入场动画
+           *    - 从 90% 缩放 + -5度旋转开始
+           *    - 带有弹性的贝塞尔曲线
+           *    - 延迟 0.3 秒，与文字形成节奏
+           *
+           * 3. 响应式顺序
+           *    - order-first: 移动端头像在前
+           *    - lg:order-last: 桌面端头像在后（右侧）
+           *
+           * 4. 浮动装饰
+           *    - 两个小圆点持续浮动
+           *    - 4-5 秒周期，错开 1 秒
+           *    - 增加生动感和层次感
+           */}
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}  // 初始：缩小 + 透明
-            animate={{ scale: 1, opacity: 1 }}     // 目标：正常 + 不透明
-            transition={{ duration: 0.6, delay: 0.2, ease: "backOut" }} // 动画时长 + 延迟，使用弹性缓动
-            className="relative group"
+            initial={{ scale: 0.9, opacity: 0, rotate: -5 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="relative group order-first lg:order-last flex justify-center"
           >
-            {/* 头像光晕：渐变模糊效果 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+            {/* 有机形状光晕背景 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-accent-500/20 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] blur-2xl opacity-50 group-hover:opacity-70 transition-all duration-1000 group-hover:rounded-[40%_60%_70%_30%/40%_70%_30%_60%]" />
 
             {/* 头像容器 */}
-            <div className="relative w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-white/20 group-hover:border-primary-400/50 transition-all duration-500 shadow-2xl shadow-primary-500/20 group-hover:shadow-primary-500/40">
-              {/* 头像图片 */}
+            <div className="relative w-72 h-72 lg:w-96 lg:h-96 rounded-[60%_40%_30%_70%/60%_30%_70%_40%] overflow-hidden border-2 border-white/10 group-hover:border-primary-400/30 transition-all duration-1000 shadow-2xl group-hover:rounded-[40%_60%_70%_30%/40%_70%_30%_60%]">
               <img
                 src={profile.avatar}
                 alt={profile.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
               />
+              {/* 叠加纹理：增加质感 */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-transparent mix-blend-overlay" />
             </div>
+
+            {/* 浮动装饰元素 1：右上角 */}
+            <motion.div
+              animate={{ y: [-8, 8, -8] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-4 -right-4 w-20 h-20 bg-accent-500/20 rounded-full blur-xl"
+            />
+            {/* 浮动装饰元素 2：左下角，延迟 1 秒 */}
+            <motion.div
+              animate={{ y: [6, -6, 6] }}
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute -bottom-6 -left-6 w-24 h-24 bg-primary-500/15 rounded-full blur-xl"
+            />
           </motion.div>
 
-          {/* 
-            ====== 文字信息部分 ======
-            
-            flex-1: 占据剩余空间
-            text-center: 文字居中（手机）
-            lg:text-left: 大屏幕文字左对齐
-          */}
-          <div className="flex-1 text-center lg:text-left">
+          {/**
+           * 左侧：文字信息区域
+           * -----------------
+           * - 移动端居中对齐
+           * - 桌面端左对齐，与右侧头像形成平衡
+           */}
+          <div className="text-center lg:text-left">
             
             {/* 
               ====== 姓名 ======
@@ -181,14 +242,42 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               - bg-clip-text: 渐变只应用于文字
               - text-transparent: 文字透明（让渐变显示）
             */}
-            <motion.h1
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-              className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary-200 to-accent-400 bg-clip-text text-transparent drop-shadow-lg"
+            {/**
+             * 角色标签
+             * --------
+             * - 使用等宽字体 (font-mono) 呈现技术感
+             * - 脉冲动画的小圆点表示"在线"状态
+             * - 毛玻璃效果 (backdrop-blur-sm) 增加层次
+             */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 backdrop-blur-sm"
             >
-              {/* 显示姓名 */}
-              {profile.name}
+              <span className="w-2 h-2 bg-accent-400 rounded-full animate-pulse" />
+              <span className="text-sm font-mono text-accent-400 tracking-wider">全栈开发工程师</span>
+            </motion.div>
+
+            {/**
+             * 姓名标题
+             * --------
+             * - 使用 Syne 显示字体，几何风格，现代有个性
+             * - 超大字号 (text-6xl ~ text-9xl)，视觉冲击力强
+             * - 第一个字用纯色，其余用渐变，创造视觉焦点
+             * - leading-[0.9] 紧凑行高，增强标题气势
+             * - tracking-tight 紧凑字距，更紧凑有力
+             */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="font-display text-6xl lg:text-8xl xl:text-9xl font-extrabold mb-8 leading-[0.9] tracking-tight"
+            >
+              <span className="text-dark-50">{profile.name.split('')[0]}</span>
+              <span className="bg-gradient-to-r from-primary-400 via-primary-500 to-accent-400 bg-clip-text text-transparent">
+                {profile.name.slice(1)}
+              </span>
             </motion.h1>
 
             {/* 
@@ -203,13 +292,20 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               - mb-8: 下边距 8 单位
               - leading-relaxed: 行高宽松（文字间距）
             */}
+            {/**
+             * 个人简介
+             * --------
+             * - 使用 DM Sans 正文字体，优雅清晰
+             * - text-dark-300: 比主文字稍暗，层次分明
+             * - leading-relaxed: 宽松行高，阅读舒适
+             * - max-w-xl: 限制最大宽度，避免单行过长
+             */}
             <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-              className="text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-2xl"
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="font-body text-lg lg:text-xl text-dark-300 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0"
             >
-              {/* 显示个人简介 */}
               {profile.bio}
             </motion.p>
 
@@ -227,7 +323,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
               {/* 
@@ -251,14 +347,28 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                 - hover:shadow-lg: 悬停时显示阴影
                 - hover:shadow-primary-500/25: 阴影颜色
               */}
+              {/**
+               * 联系按钮
+               * --------
+               * - rounded-2xl: 大圆角，现代感
+               * - font-display: 使用 Syne 字体，与标题呼应
+               * - hover:shadow-warm-lg: 悬停时琥珀色阴影
+               * - hover:-translate-y-1: 悬停时上浮 4px
+               * - active:translate-y-0: 点击时下沉反馈
+               *
+               * 光效动画：
+               * - 使用伪元素实现扫光效果
+               * - 从左到右滑过，营造高级感
+               * - duration-700: 700ms 完成扫光
+               */}
               <a
                 href={`mailto:${profile.email}`}
-                className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-1 active:translate-y-0 active:shadow-lg"
+                className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 rounded-2xl font-display font-semibold text-lg transition-all duration-300 hover:shadow-warm-lg hover:-translate-y-1 active:translate-y-0 overflow-hidden"
               >
-                {/* Mail 图标 */}
-                <Mail className="w-6 h-6" />
-                {/* 按钮文字 */}
-                联系我
+                {/* 扫光效果 */}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
+                <Mail className="w-5 h-5 relative z-10" />
+                <span className="relative z-10">联系我</span>
               </a>
 
               {/* 
@@ -279,32 +389,25 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                 // 返回图标按钮
                 return (
                   /**
-                   * a: 超链接
-                   * 
-                   * target="_blank": 在新标签页打开
-                   * rel="noopener noreferrer": 安全属性（防止恶意网站）
-                   * 
-                   * Tailwind 类名解释：
-                   * - w-12 h-12: 宽高 12 单位
-                   * - flex items-center justify-center: 居中
-                   * - rounded-full: 圆形
-                   * - bg-white/5: 背景（白色 5% 透明度）
-                   * - hover:bg-white/10: 悬停时背景加深
-                   * - border border-white/10: 边框
-                   * - hover:scale-110: 悬停时放大 110%
-                   * - hover:border-accent-500/50: 悬停时边框变色
-                   * - transitionDelay: 延迟动画（依次出现）
+                   * 社交媒体图标按钮
+                   * -----------------
+                   * - rounded-2xl: 与联系按钮风格统一
+                   * - backdrop-blur-sm: 毛玻璃效果
+                   * - hover:scale-105: 悬停时轻微放大
+                   * - hover:-translate-y-1: 悬停时上浮
+                   * - hover:shadow-warm: 悬停时琥珀色阴影
+                   * - active:scale-95: 点击时缩小反馈
+                   * - transitionDelay: 交错动画，依次出现
                    */
                   <a
                     key={key}
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-14 h-14 flex items-center justify-center rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-primary-500/20 hover:to-accent-500/20 border border-white/10 hover:border-primary-400/50 transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 active:translate-y-0"
+                    className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary-400/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-warm active:scale-95 active:translate-y-0 backdrop-blur-sm"
                     style={{ transitionDelay: `${index * 0.1}s` }}
                   >
-                    {/* 显示图标 */}
-                    <Icon className="w-6 h-6 text-slate-300 group-hover:text-white transition-colors" />
+                    <Icon className="w-5 h-5 text-dark-200 hover:text-primary-400 transition-colors" />
                   </a>
                 );
               })}
