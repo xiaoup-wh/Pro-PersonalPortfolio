@@ -54,7 +54,9 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
      * 
      * py-20: 上下内边距 20 单位
      */
-    <section className="py-20">
+    <section className="py-24 relative">
+      {/* 背景装饰 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-accent-900/5 to-transparent" />
       
       {/* 
         ====== 内容容器 ======
@@ -73,18 +75,22 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
           whileInView: 进入视口时触发动画
           viewport={{ once: true }}: 只触发一次
         */}
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl lg:text-4xl font-bold text-center mb-16"
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
         >
-          {/* 渐变文字 */}
-          <span className="bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
-            项目作品
-          </span>
-        </motion.h2>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-accent-400 via-primary-400 to-accent-400 bg-clip-text text-transparent">
+              项目作品
+            </span>
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            精选项目展示，每个项目都体现了对技术与设计的追求
+          </p>
+        </motion.div>
 
         {/* 
           ====== 项目卡片网格 ======
@@ -114,27 +120,18 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
              */
             <motion.div
               key={project.id}              // React key（项目唯一 ID）
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ y: -8 }}
-              className="group relative"    // group: 用于组合悬停效果
+              transition={{ duration: 0.7, delay: index * 0.15, ease: "easeOut" }}
+              whileHover={{ y: -12, scale: 1.02 }}
+              className="group relative h-full"    // group: 用于组合悬停效果，h-full 确保高度一致
             >
-              {/* 
-                ====== 卡片光晕效果 ======
-                
-                悬停时显示的渐变光晕
-              */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-accent-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
-              
-              {/* 
-                ====== 卡片主体 ======
-                
-                rounded-3xl: 更大的圆角
-                overflow-hidden: 隐藏超出部分（图片）
-              */}
-              <div className="relative bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-3xl overflow-hidden hover:border-primary-500/50 transition-all">
+              {/* 卡片光晕效果 */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-600/25 to-accent-500/25 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* 卡片主体 */}
+              <div className="relative bg-slate-800/60 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden hover:border-primary-400/50 transition-all duration-300 shadow-xl shadow-black/20 group-hover:shadow-2xl group-hover:shadow-primary-500/15 flex flex-col h-full">
                 
                 {/* 
                   ====== 项目图片区域 ======
@@ -142,55 +139,24 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   h-48: 固定高度 48 单位
                   overflow-hidden: 隐藏超出部分
                 */}
-                <div className="relative h-48 overflow-hidden">
-                  
-                  {/* 
-                    ====== 项目截图 ======
-                    
-                    src: 图片地址
-                    alt: 图片描述
-                    
-                    transition-transform: 图片变换有过渡效果
-                    duration-500: 过渡时长 500ms
-                    group-hover:scale-110: 悬停时放大 10%
-                    
-                    效果：鼠标悬停时图片缓慢放大
-                  */}
+                <div className="relative h-52 overflow-hidden">
+                  {/* 项目截图 */}
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  
-                  {/* 
-                    ====== 图片渐变遮罩 ======
-                    
-                    从底部到顶部的渐变遮罩
-                    让图片底部变暗，方便显示链接按钮
-                    
-                    opacity-80: 80% 透明度
-                  */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-80" />
-                  
-                  {/* 
-                    ====== 项目链接按钮 ======
-                    
-                    a: 超链接
-                    
-                    absolute: 绝对定位
-                    bottom-4 right-4: 距离底部和右边 4 单位
-                    
-                    opacity-0: 默认隐藏
-                    group-hover:opacity-100: 悬停时显示
-                    
-                    效果：鼠标悬停时显示链接按钮
-                  */}
+
+                  {/* 图片渐变遮罩 */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-90" />
+
+                  {/* 项目链接按钮 */}
                   <a
                     href={project.link}
-                    className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-primary-500 hover:scale-110"
+                    className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gradient-to-br hover:from-primary-500 hover:to-accent-500 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/30 active:scale-95 active:translate-y-0"
                   >
                     {/* ExternalLink 图标 */}
-                    <ExternalLink className="w-5 h-5" />
+                    <ExternalLink className="w-6 h-6" />
                   </a>
                 </div>
                 
@@ -199,68 +165,24 @@ const Projects: React.FC<ProjectsProps> = ({ projects }) => {
                   
                   p-6: 内边距 6 单位
                 */}
-                <div className="p-6">
-                  
-                  {/* 
-                    ====== 项目标题 ======
-                    
-                    text-xl: 字体大小 xl
-                    font-bold: 加粗
-                    mb-3: 下边距 3 单位
-                    
-                    group-hover:text-primary-400: 悬停时变色
-                    
-                    效果：鼠标悬停时标题变成蓝色
-                  */}
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">
+                <div className="p-7 flex flex-col flex-1">
+                  {/* 项目标题 */}
+                  <h3 className="text-2xl font-bold mb-3 group-hover:text-primary-400 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  
-                  {/* 
-                    ====== 项目描述 ======
-                    
-                    text-slate-400: 灰色文字
-                    text-sm: 小号字体
-                    mb-4: 下边距
-                    
-                    line-clamp-2: 限制最多显示 2 行
-                    超出部分隐藏（防止描述太长）
-                  */}
-                  <p className="text-slate-400 text-sm mb-4 line-clamp-2">
+
+                  {/* 项目描述 */}
+                  <p className="text-slate-400 text-base mb-5 line-clamp-2 leading-relaxed flex-1">
                     {project.description}
                   </p>
-                  
-                  {/* 
-                    ====== 技术标签 ======
-                    
-                    flex: 弹性布局
-                    flex-wrap: 允许换行
-                    gap-2: 间距
-                  */}
-                  <div className="flex flex-wrap gap-2">
-                    
-                    {/* 
-                      ====== 遍历标签数组 ======
-                      
-                      为每个技术标签创建一个小标签
-                    */}
+
+                  {/* 技术标签 - 固定在底部 */}
+                  <div className="flex flex-wrap gap-2 mt-auto">
                     {project.tags.map((tag) => (
-                      
-                      /**
-                       * span: 标签容器
-                       * 
-                       * px-3 py-1: 内边距
-                       * text-xs: 最小字体
-                       * font-medium: 中等粗细
-                       * rounded-full: 完全圆角
-                       * bg-white/5: 背景（白色 5%）
-                       * border: 边框
-                       */
                       <span
                         key={tag}
-                        className="px-3 py-1 text-xs font-medium rounded-full bg-white/5 text-slate-300 border border-white/10"
+                        className="px-4 py-1.5 text-xs font-semibold rounded-full bg-gradient-to-r from-white/5 to-white/10 text-slate-300 border border-white/10 hover:border-primary-400/50 hover:bg-primary-500/10 transition-all duration-200"
                       >
-                        {/* 显示标签名称 */}
                         {tag}
                       </span>
                     ))}

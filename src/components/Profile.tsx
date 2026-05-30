@@ -89,7 +89,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
     <motion.section
       initial={{ opacity: 0, y: 20 }}      // 初始：透明 + 下移 20px
       animate={{ opacity: 1, y: 0 }}       // 目标：不透明 + 原位
-      transition={{ duration: 0.6 }}       // 动画时长
+      transition={{ duration: 0.8, ease: "easeOut" }} // 动画时长，使用更平滑的缓动函数
       className="relative overflow-hidden" // 相对定位 + 隐藏溢出
     >
       
@@ -101,13 +101,16 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
       */}
       
       {/* 渐变背景：从蓝色到青色的渐变 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/30 via-accent-500/10 to-transparent" />
-      
+      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/40 via-slate-900/80 to-accent-900/30" />
+
       {/* 右上角光晕：大圆形模糊效果 */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-      
+      <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/25 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-pulse" />
+
       {/* 左下角光晕：另一个大圆形模糊效果 */}
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-500/25 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 animate-pulse" />
+
+      {/* 中心装饰光晕 */}
+      <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-primary-500/10 rounded-full blur-2xl -translate-x-1/2 -translate-y-1/2" />
       
       {/* 
         ====== 主要内容区域 ======
@@ -137,31 +140,19 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}  // 初始：缩小 + 透明
             animate={{ scale: 1, opacity: 1 }}     // 目标：正常 + 不透明
-            transition={{ duration: 0.6, delay: 0.2 }} // 动画时长 + 延迟
-            className="relative"
+            transition={{ duration: 0.6, delay: 0.2, ease: "backOut" }} // 动画时长 + 延迟，使用弹性缓动
+            className="relative group"
           >
             {/* 头像光晕：渐变模糊效果 */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full blur-xl opacity-50" />
-            
-            {/* 
-              头像容器：
-              - w-48 h-48: 宽高 48 单位（手机）
-              - lg:w-64 lg:h-64: 大屏幕宽高 64 单位
-              - rounded-full: 完全圆形
-              - overflow-hidden: 隐藏超出部分
-              - border-4 border-white/10: 4px 白色边框（10% 透明度）
-            */}
-            <div className="relative w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-white/10">
-              {/* 
-                img: 图片标签
-                src: 图片地址（从 profile.avatar 获取）
-                alt: 图片描述（用于无障碍访问）
-                object-cover: 图片填满容器，可能裁剪
-              */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+
+            {/* 头像容器 */}
+            <div className="relative w-48 h-48 lg:w-64 lg:h-64 rounded-full overflow-hidden border-4 border-white/20 group-hover:border-primary-400/50 transition-all duration-500 shadow-2xl shadow-primary-500/20 group-hover:shadow-primary-500/40">
+              {/* 头像图片 */}
               <img
                 src={profile.avatar}
                 alt={profile.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
           </motion.div>
@@ -193,8 +184,8 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
             <motion.h1
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-4xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-white via-primary-200 to-accent-400 bg-clip-text text-transparent"
+              transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+              className="text-5xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-primary-200 to-accent-400 bg-clip-text text-transparent drop-shadow-lg"
             >
               {/* 显示姓名 */}
               {profile.name}
@@ -215,8 +206,8 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
             <motion.p
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-lg lg:text-xl text-slate-300 mb-8 leading-relaxed"
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              className="text-xl lg:text-2xl text-slate-300 mb-10 leading-relaxed max-w-2xl"
             >
               {/* 显示个人简介 */}
               {profile.bio}
@@ -262,10 +253,10 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               */}
               <a
                 href={`mailto:${profile.email}`}
-                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-full font-medium transition-all hover:shadow-lg hover:shadow-primary-500/25"
+                className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-full font-semibold text-lg transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/30 hover:-translate-y-1 active:translate-y-0 active:shadow-lg"
               >
                 {/* Mail 图标 */}
-                <Mail className="w-5 h-5" />
+                <Mail className="w-6 h-6" />
                 {/* 按钮文字 */}
                 联系我
               </a>
@@ -309,11 +300,11 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all hover:scale-110 hover:border-accent-500/50"
+                    className="w-14 h-14 flex items-center justify-center rounded-full bg-white/5 hover:bg-gradient-to-br hover:from-primary-500/20 hover:to-accent-500/20 border border-white/10 hover:border-primary-400/50 transition-all duration-300 hover:scale-110 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary-500/20 active:scale-95 active:translate-y-0"
                     style={{ transitionDelay: `${index * 0.1}s` }}
                   >
                     {/* 显示图标 */}
-                    <Icon className="w-5 h-5" />
+                    <Icon className="w-6 h-6 text-slate-300 group-hover:text-white transition-colors" />
                   </a>
                 );
               })}

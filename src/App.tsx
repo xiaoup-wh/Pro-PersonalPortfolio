@@ -92,13 +92,15 @@ const App: React.FC = () => {
         - border-t: 上边框
         - border-white/5: 边框颜色（白色，透明度 5%）
       */}
-      <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/5">
-        {/* 
-          ©: 版权符号
-          {profile.name}: 动态显示姓名（从数据中获取）
-          {} 是 JSX 中插入 JavaScript 表达式的语法
-        */}
-        <p>© 2024 {profile.name}. All rights reserved.</p>
+      <footer className="py-16 text-center border-t border-white/5 bg-gradient-to-t from-slate-900/50 to-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <p className="text-slate-400 text-lg mb-2">
+            © 2024 <span className="text-primary-400 font-semibold">{profile.name}</span>
+          </p>
+          <p className="text-slate-500 text-sm">
+            使用 React + TypeScript + Tailwind CSS 构建
+          </p>
+        </div>
       </footer>
     </div>
   )

@@ -52,7 +52,9 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
      * 
      * py-20: 上下内边距 20 单位
      */
-    <section className="py-20">
+    <section className="py-24 relative">
+      {/* 背景装饰 */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary-900/5 to-transparent" />
       
       {/* 
         ====== 内容容器 ======
@@ -73,23 +75,22 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
           
           效果：当用户滚动到这个区域时，标题渐入
         */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}      // 初始状态
-          whileInView={{ opacity: 1, y: 0 }}   // 进入视口时的目标状态
-          viewport={{ once: true }}            // 只触发一次
-          transition={{ duration: 0.6 }}       // 动画时长
-          className="text-3xl lg:text-4xl font-bold text-center mb-16"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-20"
         >
-          {/* 
-            渐变文字效果：
-            bg-gradient-to-r: 从左到右渐变
-            bg-clip-text: 渐变应用于文字
-            text-transparent: 文字透明（显示渐变）
-          */}
-          <span className="bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
-            技术技能
-          </span>
-        </motion.h2>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 bg-clip-text text-transparent">
+              技术技能
+            </span>
+          </h2>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            掌握多种前沿技术，专注于构建高质量的 Web 应用
+          </p>
+        </motion.div>
 
         {/* 
           ====== 技能卡片网格 ======
@@ -140,34 +141,18 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
                */
               <motion.div
                 key={skill.name}              // React 需要 key 来识别元素
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }} // 延迟：依次出现
-                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }} // 延迟：依次出现
+                whileHover={{ y: -8, scale: 1.03 }}
                 className="relative group"    // group: 用于组合悬停效果
               >
-                {/* 
-                  ====== 卡片光晕效果 ======
-                  
-                  悬停时显示的渐变光晕
-                  opacity-0: 默认隐藏
-                  group-hover:opacity-100: 悬停时显示
-                */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/20 to-accent-500/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition-opacity" />
-                
-                {/* 
-                  ====== 卡片主体 ======
-                  
-                  bg-slate-800/50: 背景（深灰色，50% 透明度）
-                  backdrop-blur-sm: 背景模糊（毛玻璃效果）
-                  border: 边框
-                  rounded-2xl: 圆角
-                  p-6: 内边距
-                  
-                  hover:border-primary-500/50: 悬停时边框变色
-                */}
-                <div className="relative bg-slate-800/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 hover:border-primary-500/50 transition-all">
+                {/* 卡片光晕效果 */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-600/25 to-accent-500/25 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                {/* 卡片主体 */}
+                <div className="relative bg-slate-800/60 backdrop-blur-md border border-white/10 rounded-2xl p-7 hover:border-primary-400/50 transition-all duration-300 shadow-lg shadow-black/10 group-hover:shadow-xl group-hover:shadow-primary-500/10">
                   
                   {/* 
                     ====== 技能头部（图标 + 名称 + 熟练度） ======
@@ -179,61 +164,30 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
                   */}
                   <div className="flex items-center gap-4 mb-4">
                     
-                    {/* 
-                      ====== 图标容器 ======
-                      
-                      w-12 h-12: 宽高 12 单位
-                      rounded-xl: 圆角
-                      bg-gradient-to-br: 渐变背景
-                      flex items-center justify-center: 图标居中
-                    */}
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
-                      {/* 
-                        显示图标
-                        Icon &&: 如果图标存在才显示
-                        w-6 h-6: 图标大小
-                        text-white: 白色
-                      */}
-                      {Icon && <Icon className="w-6 h-6 text-white" />}
+                    {/* 图标容器 */}
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center shadow-lg shadow-primary-500/25 group-hover:shadow-primary-500/40 transition-shadow duration-300">
+                      {/* 显示图标 */}
+                      {Icon && <Icon className="w-7 h-7 text-white" />}
                     </div>
                     
-                    {/* 
-                      ====== 技能名称和熟练度 ======
-                    */}
+                    {/* 技能名称和熟练度 */}
                     <div>
                       {/* 技能名称 */}
-                      <h3 className="font-semibold text-lg">{skill.name}</h3>
+                      <h3 className="font-bold text-xl text-white group-hover:text-primary-300 transition-colors duration-300">{skill.name}</h3>
                       {/* 熟练度百分比 */}
-                      <span className="text-sm text-slate-400">{skill.level}%</span>
+                      <span className="text-sm font-medium text-accent-400">{skill.level}%</span>
                     </div>
                   </div>
                   
-                  {/* 
-                    ====== 进度条 ======
-                    
-                    h-2: 高度 2 单位
-                    bg-slate-700: 背景颜色（深灰色）
-                    rounded-full: 圆角
-                    overflow-hidden: 隐藏超出部分
-                  */}
-                  <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-                    
-                    {/* 
-                      ====== 进度条填充 ======
-                      
-                      motion.div: 带动画的进度条
-                      
-                      initial={{ width: 0 }}: 初始宽度 0
-                      whileInView={{ width: `${skill.level}%` }}: 进入视口时填充到对应百分比
-                      
-                      效果：滚动到技能区域时，进度条从 0 增长到熟练度百分比
-                    */}
+                  {/* 进度条 */}
+                  <div className="h-3 bg-slate-700/50 rounded-full overflow-hidden shadow-inner">
+                    {/* 进度条填充 */}
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
-                      transition={{ duration: 1, delay: index * 0.1 + 0.3 }}
-                      className="h-full bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"
+                      transition={{ duration: 1.2, delay: index * 0.1 + 0.3, ease: "easeOut" }}
+                      className="h-full bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500 rounded-full shadow-lg shadow-primary-500/30"
                     />
                   </div>
                 </div>
