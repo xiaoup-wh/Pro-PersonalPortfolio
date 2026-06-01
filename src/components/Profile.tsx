@@ -21,8 +21,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 // 图标：从 lucide-react 图标库导入
-// 这些是社交媒体图标和邮箱图标
-import { Github, Linkedin, Twitter, Globe, Mail } from 'lucide-react';
+import { Mail, Phone, Github } from 'lucide-react';
 
 // Profile 类型：确保传入的数据格式正确
 import { Profile as ProfileType } from '../types';
@@ -55,21 +54,6 @@ interface ProfileProps {
  */
 const Profile: React.FC<ProfileProps> = ({ profile }) => {
   
-  /**
-   * socialIcons: 社交媒体图标映射
-   * 
-   * 这是一个对象，把社交媒体名称映射到对应的图标组件
-   * 例如：'github' -> Github 图标组件
-   * 
-   * 用途：根据数据中的社交媒体名称，显示对应的图标
-   */
-  const socialIcons = {
-    github: Github,      // GitHub 图标
-    linkedin: Linkedin,  // LinkedIn 图标
-    twitter: Twitter,    // Twitter 图标
-    website: Globe       // 网站图标（地球图标）
-  };
-
   // ========== 返回 JSX 结构 ==========
   
   return (
@@ -256,7 +240,7 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full mb-6 backdrop-blur-sm"
             >
               <span className="w-2 h-2 bg-accent-400 rounded-full animate-pulse" />
-              <span className="text-sm font-mono text-accent-400 tracking-wider">全栈开发工程师</span>
+              <span className="text-sm font-mono text-accent-400 tracking-wider">AI项目/产品经理</span>
             </motion.div>
 
             {/**
@@ -361,56 +345,63 @@ const Profile: React.FC<ProfileProps> = ({ profile }) => {
                * - 从左到右滑过，营造高级感
                * - duration-700: 700ms 完成扫光
                */}
-              <a
-                href={`mailto:${profile.email}`}
-                className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 rounded-2xl font-display font-semibold text-lg transition-all duration-300 hover:shadow-warm-lg hover:-translate-y-1 active:translate-y-0 overflow-hidden"
-              >
-                {/* 扫光效果 */}
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
-                <Mail className="w-5 h-5 relative z-10" />
-                <span className="relative z-10">联系我</span>
-              </a>
+              <div className="relative group/btn-wrapper">
+                <a
+                  href={`mailto:${profile.email}`}
+                  className="group/btn relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 rounded-2xl font-display font-semibold text-lg transition-all duration-300 hover:shadow-warm-lg hover:-translate-y-1 active:translate-y-0 overflow-hidden"
+                >
+                  {/* 扫光效果 */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
+                  <Mail className="w-5 h-5 relative z-10" />
+                  <span className="relative z-10">联系我</span>
+                </a>
 
-              {/* 
-                ====== 社交媒体图标 ======
-                
-                Object.entries: 把对象转成数组
-                例如 { github: 'url' } 变成 [['github', 'url']]
-                
-                map: 遍历数组，为每个元素创建一个图标按钮
-              */}
-              {Object.entries(profile.socialLinks).map(([key, url], index) => {
-                // 如果没有链接，就不显示
-                if (!url) return null;
-                
-                // 获取对应的图标组件
-                const Icon = socialIcons[key as keyof typeof socialIcons];
-                
-                // 返回图标按钮
-                return (
-                  /**
-                   * 社交媒体图标按钮
-                   * -----------------
-                   * - rounded-2xl: 与联系按钮风格统一
-                   * - backdrop-blur-sm: 毛玻璃效果
-                   * - hover:scale-105: 悬停时轻微放大
-                   * - hover:-translate-y-1: 悬停时上浮
-                   * - hover:shadow-warm: 悬停时琥珀色阴影
-                   * - active:scale-95: 点击时缩小反馈
-                   * - transitionDelay: 交错动画，依次出现
-                   */
-                  <a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary-400/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-warm active:scale-95 active:translate-y-0 backdrop-blur-sm"
-                    style={{ transitionDelay: `${index * 0.1}s` }}
-                  >
-                    <Icon className="w-5 h-5 text-dark-200 hover:text-primary-400 transition-colors" />
-                  </a>
-                );
-              })}
+                {/* 悬停浮窗：显示电话和邮箱 */}
+                <div className="absolute left-0 top-full mt-3 w-72 opacity-0 invisible group-hover/btn-wrapper:opacity-100 group-hover/btn-wrapper:visible transition-all duration-300 transform translate-y-2 group-hover/btn-wrapper:translate-y-0 pointer-events-none group-hover/btn-wrapper:pointer-events-auto z-50">
+                  <div className="bg-dark-900/95 backdrop-blur-xl border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/50">
+                    {/* 浮窗标题 */}
+                    <div className="text-xs font-mono text-accent-400 mb-3 tracking-wider">联系方式</div>
+
+                    {/* 电话 */}
+                    <a
+                      href={`tel:${profile.phone}`}
+                      className="flex items-center gap-3 py-2 text-dark-200 hover:text-primary-400 transition-colors"
+                    >
+                      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-primary-500/20">
+                        <Phone className="w-4 h-4 text-primary-400" />
+                      </div>
+                      <span className="font-body text-sm">{profile.phone}</span>
+                    </a>
+
+                    {/* 邮箱 */}
+                    <a
+                      href={`mailto:${profile.email}`}
+                      className="flex items-center gap-3 py-2 text-dark-200 hover:text-primary-400 transition-colors"
+                    >
+                      <div className="w-8 h-8 flex items-center justify-center rounded-lg bg-accent-500/20">
+                        <Mail className="w-4 h-4 text-accent-400" />
+                      </div>
+                      <span className="font-body text-sm">{profile.email}</span>
+                    </a>
+
+                    {/* 浮窗装饰箭头 */}
+                    <div className="absolute -top-2 left-6 w-4 h-4 bg-dark-900/95 border-l border-t border-white/10 transform rotate-45" />
+                  </div>
+                </div>
+              </div>
+
+              {/* GitHub 图标按钮 */}
+              {profile.socialLinks?.github && (
+                <a
+                  href={profile.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-primary-400/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1 hover:shadow-warm active:scale-95 active:translate-y-0 backdrop-blur-sm"
+                >
+                  <Github className="w-5 h-5 text-dark-200 hover:text-primary-400 transition-colors" />
+                </a>
+              )}
+
             </motion.div>
           </div>
         </div>

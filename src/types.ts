@@ -88,13 +88,14 @@ export interface Profile {
   avatar: string;        // 头像图片 URL
   bio: string;           // 个人简介
   email: string;         // 邮箱地址
-  
+  phone?: string;        // 电话号码（可选）
+
   /**
    * socialLinks: 社交媒体链接
-   * 
+   *
    * ?: 可选属性（可能存在，也可能不存在）
    * 例如：github?: string 表示 github 链接是可选的
-   * 
+   *
    * 这样设计的好处：
    * - 如果用户没有某个社交媒体账号，可以不填
    * - 不会报错，更加灵活

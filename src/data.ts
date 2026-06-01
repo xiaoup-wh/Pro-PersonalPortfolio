@@ -27,24 +27,26 @@ import { Profile, Skill, Project } from './types';
  */
 export const profile: Profile = {
   // 姓名：显示在网站标题处
-  name: '张伟',
-  
-  // 头像：使用 Unsplash 提供的示例图片
-  // 你可以替换成自己的头像 URL
-  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-  
+  name: '王鸿',
+
+  // 头像：使用本地图片
+  avatar: '/avatar.jpg',
+
   // 个人简介：介绍你的职业和特长
-  bio: '全栈开发工程师，专注于构建优雅、高性能的 Web 应用。热爱编程，追求代码的简洁与美感。',
-  
+  bio: 'AI项目/产品经理，3年软件项目管理经验 + 独立AI应用开发能力 + Vibe coding能力。',
+
   // 邮箱：用于联系按钮
-  email: 'zhangwei@example.com',
-  
+  email: 'wanghong8105@163.com',
+
+  // 电话：用于联系按钮悬停显示
+  phone: '17208268105',
+
   // 社交媒体链接：点击图标会跳转到对应页面
   socialLinks: {
     github: 'https://github.com',       // GitHub 主页
-    linkedin: 'https://linkedin.com',   // LinkedIn 主页
-    twitter: 'https://twitter.com',     // Twitter 主页
-    website: 'https://example.com'      // 个人网站
+    // linkedin: 'https://linkedin.com',   // LinkedIn 主页
+    // twitter: 'https://twitter.com',     // Twitter 主页
+    // website: 'https://example.com'      // 个人网站
   }
 };
 
@@ -62,29 +64,29 @@ export const profile: Profile = {
  * - 修改熟练度：改变 level 值（0-100）
  */
 export const skills: Skill[] = [
-  // 技能 1：React
-  { name: 'React', level: 90, icon: 'Code2' },
+  // 技能 1：项目管理
+  { name: '项目管理', level: 100, icon: 'Code2' },
   
-  // 技能 2：TypeScript
-  { name: 'TypeScript', level: 85, icon: 'FileCode2' },
+  // 技能 2：dify
+  { name: 'dify', level: 85, icon: 'FileCode2' },
   
-  // 技能 3：Node.js
-  { name: 'Node.js', level: 80, icon: 'Server' },
+  // 技能 3：git
+  { name: 'git', level: 70, icon: 'Server' },
   
   // 技能 4：Python
-  { name: 'Python', level: 75, icon: 'Terminal' },
+  { name: 'Python', level: 65, icon: 'Terminal' },
   
-  // 技能 5：Tailwind CSS
-  { name: 'Tailwind CSS', level: 88, icon: 'Palette' },
+  // 技能 5：MySQL
+  { name: 'MySQL', level: 80, icon: 'Palette' },
   
-  // 技能 6：PostgreSQL（数据库）
-  { name: 'PostgreSQL', level: 70, icon: 'Database' },
+  // 技能 6：vibe coding
+  { name: 'vibe coding', level: 70, icon: 'Database' },
   
   // 技能 7：Docker（容器技术）
-  { name: 'Docker', level: 65, icon: 'Box' },
+  // { name: 'Docker', level: 65, icon: 'Box' },
   
   // 技能 8：AWS（云服务）
-  { name: 'AWS', level: 60, icon: 'Cloud' }
+  // { name: 'AWS', level: 60, icon: 'Cloud' }
 ];
 
 // ========== 项目数据 ==========
