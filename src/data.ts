@@ -103,14 +103,14 @@ export const skills: Skill[] = [
  * - link: 项目链接
  */
 export const projects: Project[] = [
-  // 项目 1：电商平台
+  // 项目 1：待办事项应用
   {
     id: '1',
-    title: '电商平台',
-    description: '一个功能完整的电商平台，包含商品展示、购物车、支付等功能。',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    link: '#'
+    title: '待办事项应用',
+    description: '专业待办事项管理应用，支持任务创建、编辑、删除和状态管理。',
+    image: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=600&fit=crop',
+    tags: ['React', 'TypeScript'],
+    link: 'https://pro-to-do-list-beta.vercel.app/'
   },
   
   // 项目 2：任务管理系统
