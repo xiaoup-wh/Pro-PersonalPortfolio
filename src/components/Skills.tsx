@@ -133,7 +133,7 @@ const Skills: React.FC<SkillsProps> = ({ skills }) => {
             </h2>
             {/* 描述文字 */}
             <p className="font-body text-dark-400 text-lg max-w-xl mx-auto">
-              掌握多种前沿技术，专注于构建高质量的 Web 应用
+              精通 AI 应用开发与项目管理，擅长用 Vibe Coding 快速实现创意
             </p>
           </div>
         </motion.div>

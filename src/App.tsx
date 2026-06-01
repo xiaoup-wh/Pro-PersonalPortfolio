@@ -134,7 +134,7 @@ const App: React.FC = () => {
 
           {/* 版权信息 */}
           <p className="font-body text-dark-400 text-base mb-3">
-            © 2024 保留所有权利
+            © 2026 保留所有权利
           </p>
 
           {/* 技术栈展示 */}

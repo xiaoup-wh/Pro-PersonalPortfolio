@@ -113,53 +113,53 @@ export const projects: Project[] = [
     link: 'https://pro-to-do-list-beta.vercel.app/'
   },
   
-  // 项目 2：任务管理系统
+  // 项目 2：Markdown 笔记应用
   {
     id: '2',
-    title: '任务管理系统',
-    description: '团队协作任务管理工具，支持看板视图和甘特图。',
+    title: 'Markdown 笔记应用',
+    description: '专业的 Markdown 笔记管理应用，支持实时预览、语法高亮和云端同步。',
     image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800&h=600&fit=crop',
-    tags: ['Vue.js', 'Firebase', 'Tailwind CSS'],
-    link: '#'
+    tags: ['React', 'TypeScript', 'Markdown'],
+    link: 'https://pro-markdown-note.vercel.app/'
   },
   
-  // 项目 3：AI 图像生成器
+  // 项目 3：番茄钟计时器
   {
     id: '3',
-    title: 'AI 图像生成器',
-    description: '基于 Stable Diffusion 的 AI 图像生成 Web 应用。',
-    image: 'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=800&h=600&fit=crop',
-    tags: ['Python', 'FastAPI', 'React', 'TensorFlow'],
-    link: '#'
-  },
-  
+    title: '番茄钟计时器',
+    description: '高效的时间管理工具，采用番茄工作法，帮助提升专注力和工作效率。',
+    image: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=600&fit=crop',
+    tags: ['React', 'TypeScript', 'CSS'],
+    link: 'https://pro-pomodoro-timer.vercel.app/'
+  }
+
   // 项目 4：在线教育平台
-  {
-    id: '4',
-    title: '在线教育平台',
-    description: '支持视频课程、直播互动、作业提交的在线学习平台。',
-    image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop',
-    tags: ['Next.js', 'PostgreSQL', 'Redis'],
-    link: '#'
-  },
+  // {
+  //   id: '4',
+  //   title: '在线教育平台',
+  //   description: '支持视频课程、直播互动、作业提交的在线学习平台。',
+  //   image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop',
+  //   tags: ['Next.js', 'PostgreSQL', 'Redis'],
+  //   link: '#'
+  // },
   
   // 项目 5：社交网络应用
-  {
-    id: '5',
-    title: '社交网络应用',
-    description: '实时消息、动态发布、好友系统的社交网络平台。',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop',
-    tags: ['React Native', 'Socket.io', 'GraphQL'],
-    link: '#'
-  },
+  // {
+  //   id: '5',
+  //   title: '社交网络应用',
+  //   description: '实时消息、动态发布、好友系统的社交网络平台。',
+  //   image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&h=600&fit=crop',
+  //   tags: ['React Native', 'Socket.io', 'GraphQL'],
+  //   link: '#'
+  // },
   
   // 项目 6：数据分析仪表板
-  {
-    id: '6',
-    title: '数据分析仪表板',
-    description: '企业级数据可视化和分析平台。',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
-    tags: ['D3.js', 'React', 'Python', 'Pandas'],
-    link: '#'
-  }
+  // {
+  //   id: '6',
+  //   title: '数据分析仪表板',
+  //   description: '企业级数据可视化和分析平台。',
+  //   image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop',
+  //   tags: ['D3.js', 'React', 'Python', 'Pandas'],
+  //   link: '#'
+  // }
 ];
